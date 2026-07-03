@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: frontend-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: frontend
+
+  template:
+    metadata:
+      labels:
+        app: frontend
+
+    spec:
+      containers:
+      - name: frontend
+        image: bilalasif8989/hayroo-frontend:v3
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 80
+
+        env:
+        - name: HOST
+          value: "0.0.0.0"
+
+        - name: CHOKIDAR_USEPOLLING
+          value: "true"
+
+        - name: REACT_APP_API_URL
+          value: "http://backend-service:8000"
